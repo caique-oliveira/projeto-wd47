@@ -17,3 +17,4 @@ const mural = document.querySelector('.mural')
 }
 btn.addEventListener('click', mudaLayout)
 
+btn.classList.remove('no-js')
