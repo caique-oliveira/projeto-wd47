@@ -3,92 +3,24 @@
     let numeroDoCartao = 0
 
     form.addEventListener("submit", function(event){
-    event.preventDefault()
-    const textarea = form.querySelector(".formNovoCartao-conteudo")
-    const isTextAreaVazio = textarea.value.trim().length === 0
-    const conteudoDoCartao = textarea.value
-    if (isTextAreaVazio){
-        const msgErro = document.createElement("div")
-        msgErro.classList.add("formNovoCartao-msg")
-        msgErro.textContent = "formulário inválido. Não digite vários nada!"
+        event.preventDefault()
+        const textarea = document.querySelector(".formNovoCartao-conteudo")
+        const isTextAreaVazio = textarea.value.trim().length === 0
+        const conteudoDoCartao = textarea.value
+        if (isTextAreaVazio){
+            const msgErro = document.createElement("div")
+            msgErro.classList.add("formNovoCartao-msg")
+            msgErro.textContent = "formulário inválido. Não digite vários nada!"
 
-        const btnSubmit = form.children[form.children.length-1]
-        form.addEventListener("animationed", function(event){
+            const btnSubmit = form.children[form.children.length-1]
+            form.addEventListener("animationed", function(event){
+                event.target.remove()
 
-        })
-        form.insertBefore(msgErro, btnSubmit)
-    }else{
-        numeroDoCartao++
-        const cartao = $(`
-            <article id="cartao_${numeroDoCartao}" class="cartao" tabindex="0">
-            <div class="opcoesDoCartao">
-            <button class="opcoesDoCartao-remove opcoesDoCartao-opcao" tabindex="0">
-                <svg><use xlink:href="#iconeRemover"></use></svg>
-            </button>
-
-            <input type="radio" name="corDoCartao${numeroDoCartao}" value="#EBEF40" id="corPadrão-cartao${numeroDoCartao}" class="opcoesDoCartao-radioTipo" checked>
-            <label for="corPadrão-cartao${numeroDoCartao}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #EBEF40;" tabindex="0">
-                Padrão
-            </label>
-
-            <input type="radio" name="corDoCartao${numeroDoCartao}" value="#F05450" id="corImportante-cartao${numeroDoCartao}" class="opcoesDoCartao-radioTipo">
-            <label for="corImportante-cartao${numeroDoCartao}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #F05450;" tabindex="0">
-                Importante
-            </label>
-
-            <input type="radio" name="corDoCartao${numeroDoCartao}" value="#92C4EC" id="corTarefa-cartao${numeroDoCartao}" class="opcoesDoCartao-radioTipo">
-            <label for="corTarefa-cartao${numeroDoCartao}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #92C4EC;" tabindex="0">
-                Tarefa
-            </label>
-
-            <input type="radio" name="corDoCartao${numeroDoCartao}" value="#76EF40" id="corInspiração-cartao${numeroDoCartao}" class="opcoesDoCartao-radioTipo">
-            <label for="corInspiração-cartao${numeroDoCartao}" class="opcoesDoCartao-tipo opcoesDoCartao-opcao" style="color: #76EF40;" tabindex="0">
-                Inspiração
-            </label>
-            </div>
-            <p class="cartao-conteudo" contenteditable tabindex="0">${conteudoDoCartao}</p>
-        </article>`)
-
-        console.log(cartao)
-
-        cartao.on("focusin", function(){
-            cartao.addClass("cartao--focado")
-        })
-
-        cartao.on("focusout", function(){
-            cartao.removeClass("cartao--focado")
-        })
-
-        cartao.on("change" , function mudaCor(event){
-
-            const elementoSelecionado = event.target
-            const isRadioTipo = elementoSelecionado.hasClass('opcoesDoCartao-radioTipo')
-            if(isRadioTipo){
-                cartao.css.backgroundColor = elementoSelecionado.value
-            }
-        })
-
-        cartao.on("keydown", function deixaClicarComEnter(event){
-
-            if(event.target.hasClass("opcoesDoCartao-opcao")
-                && (event.key === 'Enter' || event.key === ' ')){
-                    event.target.click()
-            }
-        })
-        cartao.on('click', function(event){
-        const elementoSelecionado = event.target
-        if(elementoSelecionado.hasClass('opcoesDoCartao-remove')){
-            cartao.addClass("cartao--some")
-            cartao.addEventListener("transitioned", function(){  
-                cartao.remove()
             })
-        } 
-        })
-        /*                */
-         $(".mural").append(cartao)
-    }
-})
-form.classList.remove("no-js")
-
+            form.insertBefore(msgErro, btnSubmit)
+        }else{
+            window.adicionaCartaoMural({conteudo:textarea.value})
+        }  
+    })
+    form.classList.remove("no-js")
 })()
-
