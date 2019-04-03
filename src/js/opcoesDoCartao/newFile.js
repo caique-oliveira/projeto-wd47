@@ -1,4 +1,4 @@
-function () {
+function(){
     const btn = document.querySelector('.opcoesDoCartao-remove');
     btn.addEventListener('click', function () {
         const cartao = btn.parentNode.parentNode;
