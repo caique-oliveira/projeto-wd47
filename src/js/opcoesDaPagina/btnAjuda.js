@@ -4,7 +4,7 @@
       
         const xhr = new XMLHttpRequest()
         xhr.open('GET', 'https://ceep.herokuapp.com/cartoes/instrucoes')
-        xhr.responseType = "jason"
+        xhr.responseType = "json"
         xhr.send()
         xhr.addEventListener("load", function(){
 

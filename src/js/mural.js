@@ -64,5 +64,16 @@
     /*                */
     $(".mural").append(cartao)
 }
+$.ajax({
+    url: "https://ceep.herokuapp.com/cartoes/carregar",method:"GET",
+    data: {usuario: "seuemail@email.com.br"},
+    dataType: "jsonp",
+    success: function (objeto){
+        const cartoes = objeto.cartoes
+        cartoes.forEach(function(cartao){
+            adicionaCartaoMural(cartao)
+        })
+    }
 
+})  
 })()
